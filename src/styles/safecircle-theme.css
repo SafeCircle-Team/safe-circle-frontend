@@ -1,0 +1,128 @@
+:root {
+    --surface: #f8f9ff;
+    --primary: #000000;
+    --secondary: #5c5f61;
+    --outline-variant: #c5c6cd;
+    --background: #f8f9ff;
+    --on-background: #0b1c30;
+  }
+
+  .bg-surface {
+    background-color: var(--surface);
+  }
+  
+  .text-primary {
+    color: var(--primary);
+  }
+  
+  .text-secondary {
+    color: var(--secondary);
+  }
+  
+  .text-on-background {
+    color: var(--on-background);
+  }
+  
+  .border-outline-variant {
+    border-color: var(--outline-variant);
+  }
+  
+  .bg-surface-container-lowest {
+    background: white;
+  }
+  
+  .bg-surface-container-highest {
+    background: #d3e4fe;
+  }
+  
+  .bg-primary {
+    background: var(--primary);
+  }
+  
+  /* Typography */
+  .font-headline-md {
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+  }
+  
+  .text-headline-md {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  
+  .font-display-lg-mobile {
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+  }
+  
+  .text-display-lg-mobile {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  
+  .font-label-md {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .font-label-bold {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  
+  .font-body-base {
+    font-size: 16px;
+  }
+  
+  .font-body-sm {
+    font-size: 14px;
+  }
+
+  /* Spacing */
+  .space-y-stack-md > * + * {
+    margin-top: 16px;
+  }
+  
+  .space-y-stack-lg > * + * {
+    margin-top: 32px;
+  }
+  
+  .px-container-padding-mobile {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .pt-stack-md {
+    padding-top: 16px;
+  }
+
+  /* src/styles/theme.css */
+
+.bg-error {
+    background-color: #ba1a1a;
+}
+
+.text-on-error {
+    color: #ffffff;
+}
+
+.bg-primary {
+    background-color: #000000;
+}
+
+.text-primary {
+    color: #000000;
+}
+
+.text-secondary {
+    color: #5c5f61;
+}
+
+.bg-surface {
+    background-color: #f8f9ff;
+}
+
+.border-outline-variant {
+    border-color: #c5c6cd;
+}
