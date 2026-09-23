@@ -18,8 +18,6 @@ const fetchEmergencies = async () => {
 try {
 const response = await getEmergencies();
 
-    console.log(response);
-
     setEmergencies(response.data);
   } catch (error) {
     setError(error.message);
