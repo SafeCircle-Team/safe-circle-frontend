@@ -30,7 +30,10 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(formData);
+      await login({
+        phone: formData.phone.trim(),
+        password: formData.password.trim()
+      });
 
       navigate("/dashboard");
     } catch (error) {
