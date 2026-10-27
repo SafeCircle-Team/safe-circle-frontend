@@ -6,3 +6,15 @@ export const getMyFamilyContacts = async () => {
     });
 };
 
+export const createFamilyContact = async (contactData) => {
+  return await api("/familyContacts/", {
+    method: "POST",
+    body: contactData,
+  });
+};
+
+export const deleteFamilyContact = async (contactId) => {
+  return await api(`/familyContacts/${contactId}`, {
+    method: "DELETE",
+  });
+};

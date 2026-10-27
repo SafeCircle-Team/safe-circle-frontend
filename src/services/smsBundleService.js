@@ -5,6 +5,13 @@ export const getSmsBundles = async () => {
     method: "GET",
   });
 };
+
+export const getMySmsBalance = async () => {
+  return await api("/sms/balance", {
+    method: "GET",
+  });
+};
+
 export const getCommunitySmsBalance = async () => {
   return await api("/sms/community-balance", {
     method: "GET",

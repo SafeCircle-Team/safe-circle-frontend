@@ -9,7 +9,7 @@ export const getMyEmergencies = async () => {
 export const createEmergency = async (emergencyData) => {
   return await api("/emergencies", {
     method: "POST",
-    body:{emergencyData},
+    body:emergencyData,
   });
 };
 
