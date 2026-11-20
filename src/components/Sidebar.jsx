@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { user, unreadCount } = useAuth();
 
   const isCommunityAdmin = user?.role === "COMMUNITY_ADMIN";
-  const isResident = user?.role === "RESIDENT";
   const isSuperAdmin = user?.role === "SUPER_ADMIN";
 
   return (
@@ -42,6 +41,15 @@ const Sidebar = () => {
 
           <li>
             <Link
+              to="/incidents"
+              className="block text-gray-700 hover:text-blue-600"
+            >
+              Incidents
+            </Link>
+          </li>
+
+          <li>
+            <Link
               to="/contacts"
               className="block text-gray-700 hover:text-blue-600"
             >
@@ -61,9 +69,15 @@ const Sidebar = () => {
           <li>
             <Link
               to="/notifications"
-              className="block text-gray-700 hover:text-blue-600"
+              className="flex items-center justify-between text-gray-700 hover:text-blue-600"
             >
-              Notifications
+              <span>Notifications</span>
+
+              {unreadCount > 0 && (
+                <span className="rounded-full bg-red-600 px-2 py-1 text-xs font-semibold text-white">
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
             </Link>
           </li>
 

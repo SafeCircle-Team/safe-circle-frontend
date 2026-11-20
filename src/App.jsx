@@ -14,6 +14,7 @@ import Residents from "./pages/Residents";
 import Communities from "./pages/management/Communities";
 import Users from "./pages/management/Users";
 import Settings from "./pages/Settings";
+import Incidents from "./pages/Incidents";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/contacts" element={<EmergencyContacts />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/emergency" element={<Emergency />} />
+          <Route path="/incidents" element={<Incidents />} />
 
           <Route element={<RoleRoute allowedRoles={["COMMUNITY_ADMIN"]} />}>
           <Route path="/community" element={<Community />} />
