@@ -12,13 +12,23 @@ const Settings = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordMessageType, setPasswordMessageType] = useState("");
 
   const [currentPin, setCurrentPin] = useState("");
   const [newPin, setNewPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [pinMessage, setPinMessage] = useState("");
+  const [pinMessageType, setPinMessageType] = useState("");
   const [pinLoading, setPinLoading] = useState(false);
   const [hasPin, setHasPin] = useState(false);
+
+  const [showCurrentPin, setShowCurrentPin] = useState(false);
+  const [showNewPin, setShowNewPin] = useState(false);
+  const [showConfirmPin, setShowConfirmPin] = useState(false);
+
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -37,9 +47,11 @@ const Settings = () => {
     e.preventDefault();
 
     setPasswordMessage("");
+    setPasswordMessageType("");
 
     if (newPassword !== confirmPassword) {
       setPasswordMessage("New passwords do not match.");
+      setPasswordMessageType("error");
       return;
     }
 
@@ -53,12 +65,13 @@ const Settings = () => {
       });
 
       setPasswordMessage(response.message || "Password changed successfully.");
-
+      setPasswordMessageType("success");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
     } catch (error) {
       setPasswordMessage(error.message || "Failed to change password.");
+      setPasswordMessageType("error");
     } finally {
       setPasswordLoading(false);
     }
@@ -67,9 +80,11 @@ const Settings = () => {
   const handlePinChange = async (e) => {
     e.preventDefault();
     setPinMessage("");
+    setPinMessageType("");
 
     if (newPin !== confirmPin) {
       setPinMessage("PINs do not match.");
+      setPinMessageType("error");
       return;
     }
 
@@ -85,6 +100,7 @@ const Settings = () => {
         : await setMyEmergencyPin(pinData);
 
       setPinMessage(response.message || "Emergency PIN saved successfully.");
+      setPinMessageType("success");
 
       setCurrentPin("");
       setNewPin("");
@@ -92,6 +108,7 @@ const Settings = () => {
       setHasPin(true);
     } catch (error) {
       setPinMessage(error.message || "Failed to save Emergency PIN.");
+      setPinMessageType("error");
     } finally {
       setPinLoading(false);
     }
@@ -120,45 +137,82 @@ const Settings = () => {
             <label className="block text-sm font-medium text-gray-700">
               Current Password
             </label>
-            <input
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              required
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
+            <div className="relative mt-1">
+              <input
+                type={showCurrentPassword ? "text" : "password"}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                required
+                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
+              />
+              <button
+                type="button"
+                onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600"
+              >
+                {showCurrentPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
               New Password
             </label>
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-              minLength={8}
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
+            <div className="relative mt-1">
+              <input
+                type={showNewPassword ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                minLength={8}
+                className="w-full rounded-md border border-gray-300 px-3 py-2 pr-16"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600"
+              >
+                {showNewPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Confirm New Password
             </label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              minLength={8}
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
+            <div className="relative mt-1">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                minLength={8}
+                className="w-full rounded-md border border-gray-300 px-3 py-2 pr-16"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600"
+              >
+                {showConfirmPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           {passwordMessage && (
-            <p className="text-sm text-gray-700">{passwordMessage}</p>
+            <p
+              className={`text-sm ${
+                passwordMessageType === "success"
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
+            >
+              {passwordMessage}
+            </p>
           )}
 
           <button
@@ -187,16 +241,26 @@ const Settings = () => {
               <label className="block text-sm font-medium text-gray-700">
                 Current PIN
               </label>
-              <input
-                type="password"
-                inputMode="numeric"
-                maxLength={4}
-                pattern="[0-9]{4}"
-                value={currentPin}
-                onChange={(e) => setCurrentPin(e.target.value)}
-                required
-                className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-              />
+              <div className="relative mt-1">
+                <input
+                  type={showCurrentPin ? "text" : "password"}
+                  inputMode="numeric"
+                  maxLength={4}
+                  pattern="[0-9]{4}"
+                  value={currentPin}
+                  onChange={(e) => setCurrentPin(e.target.value)}
+                  required
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 pr-16"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowCurrentPin(!showCurrentPin)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600"
+                >
+                  {showCurrentPin ? "Hide" : "Show"}
+                </button>
+              </div>
             </div>
           )}
 
@@ -204,35 +268,63 @@ const Settings = () => {
             <label className="block text-sm font-medium text-gray-700">
               New PIN
             </label>
-            <input
-              type="password"
-              inputMode="numeric"
-              maxLength={4}
-              pattern="[0-9]{4}"
-              value={newPin}
-              onChange={(e) => setNewPin(e.target.value)}
-              required
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
+            <div className="relative mt-1">
+              <input
+                type={showNewPin ? "text" : "password"}
+                inputMode="numeric"
+                maxLength={4}
+                pattern="[0-9]{4}"
+                value={newPin}
+                onChange={(e) => setNewPin(e.target.value)}
+                required
+                className="w-full rounded-md border border-gray-300 px-3 py-2 pr-16"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowNewPin(!showNewPin)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600"
+              >
+                {showNewPin ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Confirm New PIN
             </label>
-            <input
-              type="password"
-              inputMode="numeric"
-              maxLength={4}
-              pattern="[0-9]{4}"
-              value={confirmPin}
-              onChange={(e) => setConfirmPin(e.target.value)}
-              required
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
+            <div className="relative mt-1">
+              <input
+                type={showConfirmPin ? "text" : "password"}
+                inputMode="numeric"
+                maxLength={4}
+                pattern="[0-9]{4}"
+                value={confirmPin}
+                onChange={(e) => setConfirmPin(e.target.value)}
+                required
+                className="w-full rounded-md border border-gray-300 px-3 py-2 pr-16"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmPin(!showConfirmPin)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-blue-600"
+              >
+                {showConfirmPin ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
 
-          {pinMessage && <p className="text-sm text-gray-700">{pinMessage}</p>}
+          {pinMessage && (
+            <p
+              className={`text-sm ${
+                pinMessageType === "success" ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {pinMessage}
+            </p>
+          )}
 
           <button
             type="submit"
