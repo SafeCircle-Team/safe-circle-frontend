@@ -15,6 +15,7 @@ const Incidents = () => {
   const [error, setError] = useState("");
 
   const [statusFilter, setStatusFilter] = useState("ALL");
+  const [showAllIncidents, setShowAllIncidents] = useState(false);
 
   const [showForm, setShowForm] = useState(false);
 
@@ -70,9 +71,15 @@ const Incidents = () => {
     (incident) => incident.status === "RESOLVED",
   ).length;
 
-  const filteredIncidents = incidents.filter((incident) => {
-    return statusFilter === "ALL" || incident.status === statusFilter;
-  });
+  const filteredIncidents = incidents
+    .filter((incident) => {
+      return statusFilter === "ALL" || incident.status === statusFilter;
+    })
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  const displayedIncidents = showAllIncidents
+    ? filteredIncidents
+    : filteredIncidents.slice(0, 5);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -198,6 +205,100 @@ const Incidents = () => {
         </div>
       </div>
 
+      {/* Incident Reporting Form */}
+      {showForm && (
+        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Report a New Incident
+          </h2>
+
+          <p className="mt-1 text-sm text-gray-500">
+            Provide the details of the incident below.
+          </p>
+
+          {/*Incident form*/}
+          <form onSubmit={handleCreateIncident} className="mt-6 space-y-5">
+            {/* Incident Title */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Incident Title
+              </label>
+
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                placeholder="e.g. Suspicious Movement"
+                required
+                minLength={2}
+                maxLength={50}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-blue-500"
+              />
+              <p className="mt-1 text-right text-xs text-gray-400">
+                {formData.title.length}/50 characters
+              </p>
+            </div>
+
+            {/* Incident Type */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Incident Type
+              </label>
+
+              <select
+                name="emergencyType"
+                value={formData.emergencyType}
+                onChange={handleInputChange}
+                required
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
+              >
+                <option value="">Select incident type</option>
+
+                {incidentTypes.map((type) => (
+                  <option key={type.value} value={type.value}>
+                    {type.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Description
+              </label>
+
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                placeholder="Provide details about the incident..."
+                required
+                minLength={2}
+                maxLength={300}
+                rows={4}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-blue-500"
+              />
+              <p className="mt-1 text-xs text-gray-400">
+                {formData.description.length}/300 characters
+              </p>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex justify-end">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {submitting ? "Submitting..." : "Submit Incident"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
       {/* Incident Filters */}
       <div className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -252,7 +353,7 @@ const Incidents = () => {
       {/* Incident Records */}
       {!loading && !error && filteredIncidents.length > 0 && (
         <div className="grid gap-5">
-          {filteredIncidents.map((incident) => (
+          {displayedIncidents.map((incident) => (
             <div
               key={incident.id}
               className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
@@ -351,97 +452,18 @@ const Incidents = () => {
         </div>
       )}
 
-      {/* Incident Reporting Form */}
-      {showForm && (
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Report a New Incident
-          </h2>
-
-          <p className="mt-1 text-sm text-gray-500">
-            Provide the details of the incident below.
-          </p>
-
-          {/*Incident form*/}
-          <form onSubmit={handleCreateIncident} className="mt-6 space-y-5">
-            {/* Incident Title */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">
-                Incident Title
-              </label>
-
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-                placeholder="e.g. Suspicious Movement"
-                required
-                minLength={2}
-                maxLength={50}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-blue-500"
-              />
-              <p className="mt-1 text-right text-xs text-gray-400">
-                {formData.title.length}/50 characters
-              </p>
-            </div>
-
-            {/* Incident Type */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">
-                Incident Type
-              </label>
-
-              <select
-                name="emergencyType"
-                value={formData.emergencyType}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-500"
-              >
-                <option value="">Select incident type</option>
-
-                {incidentTypes.map((type) => (
-                  <option key={type.value} value={type.value}>
-                    {type.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">
-                Description
-              </label>
-
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Provide details about the incident..."
-                required
-                minLength={2}
-                maxLength={300}
-                rows={4}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-blue-500"
-              />
-              <p className="mt-1 text-xs text-gray-400">
-                {formData.description.length}/300 characters
-              </p>
-            </div>
-
-            {/* Submit Button */}
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                disabled={submitting}
-                className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {submitting ? "Submitting..." : "Submit Incident"}
-              </button>
-            </div>
-          </form>
+      {/* View All Incidents */}
+      {!loading && !error && filteredIncidents.length > 5 && (
+        <div className="flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowAllIncidents(!showAllIncidents)}
+            className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700"
+          >
+            {showAllIncidents
+              ? "Show Recent Incidents"
+              : `View All ${filteredIncidents.length} Incidents`}
+          </button>
         </div>
       )}
     </div>
