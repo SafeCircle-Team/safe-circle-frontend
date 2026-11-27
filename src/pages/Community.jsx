@@ -681,20 +681,20 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
   };
 
   return (
-    <div>
+    <div className="w-full min-w-0 max-w-full">
       {/* Page Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">
+        <h1 className="text-xl font-bold text-gray-800 sm:text-2xl">
           Community Dashboard
         </h1>
 
-        <p className="mt-1 text-gray-600">
+        <p className="mt-1 text-sm text-gray-600 sm:text-base">
           Overview of your community activities and security.
         </p>
       </div>
 
       {/* Personal emergency reporting */}
-      <section className="rounded-xl border border-red-200 bg-white p-5 shadow-sm">
+      <section className="rounded-xl border border-red-200 bg-white p-4 shadow-sm sm:p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">
@@ -712,7 +712,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
               setEmergencySuccess("");
               setShowEmergencyForm((current) => !current);
             }}
-            className="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
+            className="w-full rounded-lg bg-red-600 px-5 py-2.5 text-white font-medium sm:w-auto"
           >
             {showEmergencyForm ? "Close Form" : "Report an Emergency"}
           </button>
@@ -730,7 +730,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
       </section>
 
       {/* Community Information */}
-      <div className="mt-6 rounded-lg bg-white p-6 shadow-sm">
+      <div className="mt-6 rounded-lg bg-white p-4 shadow-sm sm:p-6">
         <h2 className="text-lg font-semibold text-gray-800">
           {community?.name}
         </h2>
@@ -739,7 +739,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
       </div>
 
       {/* Official Community Responders */}
-      <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <section className="mt-6 rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-800">
@@ -851,7 +851,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
                         type="button"
                         onClick={() => handleDeactivateResponder(responder.id)}
                         disabled={deactivatingResponderId !== null}
-                        className="w-fit rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="w-full rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50 sm:w-fit"
                       >
                         {deactivatingResponderId === responder.id
                           ? "Deactivating..."
@@ -983,7 +983,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
       </section>
 
       {/* Resident Invite Codes */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-4">
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-gray-800">
             Resident Invite Codes
@@ -1044,7 +1044,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
           <button
             type="submit"
             disabled={inviteCreating}
-            className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+           className="w-full bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
           >
             {inviteCreating ? "Creating Invite..." : "Create Invite"}
           </button>
@@ -1128,7 +1128,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
       </div>
 
       {/* Subscription Information */}
-      <div className="mt-6 rounded-lg bg-white p-6 shadow-sm">
+      <div className="mt-6 rounded-lg bg-white p-4 shadow-sm sm:p-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-800">
@@ -1151,7 +1151,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
           </span>
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="mt-5 grid grid-cols-1 min-[400px]:grid-cols-2 gap-4 sm:grid-cols-4">
           <div>
             <p className="text-sm text-gray-500">Plan</p>
 
@@ -1275,12 +1275,12 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
                   </p>
                 </div>
 
-                <div className="flex gap-3">
+               <div className="flex flex-col gap-3 sm:flex-row">
                   <button
                     type="button"
                     onClick={() => setSelectedPlan(null)}
                     disabled={paymentLoading}
-                    className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                   >
                     Cancel
                   </button>
@@ -1289,7 +1289,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
                     type="button"
                     onClick={handleSubscribe}
                     disabled={paymentLoading}
-                    className="px-6 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                   >
                     {paymentLoading
                       ? "Initializing Payment..."
@@ -1321,7 +1321,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
       {/* Community Finances heading */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Community Wallet Balance */}
-        <div className="bg-white border rounded-xl p-6 shadow-sm">
+        <div className="bg-white border rounded-xl p-6 shadow-sm sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
@@ -1343,7 +1343,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
               <p className="text-sm text-red-600">{walletError}</p>
             ) : (
               <>
-                <p className="text-4xl font-bold text-gray-900">
+                <p className="text-4xl font-bold text-gray-900 sm:text-4xl">
                   ₦{Number(communityWallet?.balance || 0).toLocaleString()}
                 </p>
 
@@ -1406,7 +1406,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
             ) : smsBundlesError ? (
               <p className="text-sm text-red-600">{smsBundlesError}</p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-3">
                 {smsBundles.map((bundle) => (
                   <button
                     key={bundle.id}
@@ -1453,12 +1453,12 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
                   </p>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <button
                     type="button"
                     onClick={() => setSelectedSmsBundle(null)}
                     disabled={paymentLoading}
-                    className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50"
+                    className="w-full px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 sm:w-auto"
                   >
                     Cancel
                   </button>
@@ -1467,7 +1467,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
                     type="button"
                     onClick={handleBuySms}
                     disabled={paymentLoading}
-                    className="px-6 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-6 py-2.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
                   >
                     {paymentLoading ? "Initializing Payment..." : "Buy SMS"}
                   </button>
@@ -1487,7 +1487,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
 
       {/* Personal Resources */}
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="bg-white border rounded-xl p-6 shadow-sm">
+        <div className="bg-white border rounded-xl p-4 shadow-sm sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-gray-900">
@@ -1511,7 +1511,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
               <p className="text-sm text-red-600">{myWalletError}</p>
             ) : (
               <>
-                <p className="text-4xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-gray-900 sm:text-4xl">
                   ₦{Number(myWallet?.balance || 0).toLocaleString("en-NG")}
                 </p>
 
@@ -1534,7 +1534,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
         </div>
 
         {/* Personal SMS Card */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
           {/* Card heading */}
           <div className="mb-4 flex items-center justify-between">
             <div>
@@ -1559,7 +1559,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
             <p className="text-sm text-red-600">{mySmsError}</p>
           ) : (
             <div>
-              <p className="text-4xl font-bold text-gray-900">
+              <p className="text-3xl font-bold text-gray-900 sm:text-4xl">
                 {Number(mySmsBalance?.balance ?? 0).toLocaleString("en-NG")}
               </p>
 
@@ -1580,7 +1580,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
             ) : smsBundlesError ? (
               <p className="text-sm text-red-600">{smsBundlesError}</p>
             ) : (
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 lg:grid-cols-4">
                 {smsBundles.map((bundle) => (
                   <button
                     key={bundle.id}
@@ -1636,12 +1636,12 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
                   </p>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <button
                     type="button"
                     onClick={() => setSelectedPersonalSmsBundle(null)}
                     disabled={personalSmsPaymentLoading}
-                    className="rounded-lg border border-gray-300 px-6 py-2.5 font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                    className="w-full rounded-lg border border-gray-300 px-6 py-2.5 font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 sm:w-auto"
                   >
                     Cancel
                   </button>
@@ -1650,7 +1650,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
                     type="button"
                     onClick={handleBuyPersonalSms}
                     disabled={personalSmsPaymentLoading}
-                    className="rounded-lg bg-teal-600 px-6 py-2.5 font-medium text-white hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="w-full rounded-lg bg-teal-600 px-6 py-2.5 font-medium text-white hover:bg-teal-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                   >
                     {personalSmsPaymentLoading
                       ? "Processing..."
@@ -1728,7 +1728,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
         </div>
       </div>
       {/* Recent Emergencies */}
-      <div className="mt-6 rounded-lg bg-white p-6 shadow-sm">
+      <div className="mt-6 rounded-lg bg-white p-4 shadow-sm sm:p-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-gray-800">
@@ -1747,7 +1747,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
           </p>
         ) : (
           <div className="mt-6 overflow-x-auto">
-            <table className="w-full text-left">
+           <table className="w-full min-w-[640px] text-left">
               <thead>
                 <tr className="border-b text-sm text-gray-500">
                   <th className="pb-3 font-medium">Type</th>
@@ -1818,7 +1818,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
       {/* Recent Activity + Quick ACtion*/}
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Recent Activity */}
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+        <div className="rounded-lg bg-white p-4 shadow-sm sm:p-6">
           <div>
             <h2 className="text-lg font-semibold text-gray-800">
               Recent Activity
@@ -1863,7 +1863,7 @@ const [personalWalletFundingMessage, setPersonalWalletFundingMessage] =
         </div>
 
         {/* Quick Actions */}
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+        <div className="rounded-lg bg-white p-4 shadow-sm sm:p-6">
           <h2 className="text-lg font-semibold text-gray-800">Quick Actions</h2>
 
           <p className="mt-1 text-sm text-gray-500">

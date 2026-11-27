@@ -1,6 +1,7 @@
 import RoleRoute from "./components/RoleRoute";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import Hero from "./pages/Hero";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ProtectedRoute from "./components/ProtectedRoutes";
@@ -20,34 +21,33 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Hero />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-  
+
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
-          <Route path="/dashboard" element={<DashboardRouter />} />
-          <Route path="/contacts" element={<EmergencyContacts />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/emergency" element={<Emergency />} />
-          <Route path="/incidents" element={<Incidents />} />
+            <Route path="/dashboard" element={<DashboardRouter />} />
+            <Route path="/contacts" element={<EmergencyContacts />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/emergency" element={<Emergency />} />
+            <Route path="/incidents" element={<Incidents />} />
 
-          <Route element={<RoleRoute allowedRoles={["COMMUNITY_ADMIN"]} />}>
-          <Route path="/community" element={<Community />} />
-          </Route>
+            <Route element={<RoleRoute allowedRoles={["COMMUNITY_ADMIN"]} />}>
+              <Route path="/community" element={<Community />} />
+            </Route>
 
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route element={<RoleRoute allowedRoles={["COMMUNITY_ADMIN"]} />}>
-          <Route path="/residents" element={<Residents />} />
-          </Route>
-          <Route element={<RoleRoute allowedRoles={["SUPER_ADMIN"]} />}>
-          <Route path="/management/communities"
-          element={<Communities/>}/>
-          <Route path="/management/users" element={<Users />}/>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route element={<RoleRoute allowedRoles={["COMMUNITY_ADMIN"]} />}>
+              <Route path="/residents" element={<Residents />} />
+            </Route>
+            <Route element={<RoleRoute allowedRoles={["SUPER_ADMIN"]} />}>
+              <Route path="/management/communities" element={<Communities />} />
+              <Route path="/management/users" element={<Users />} />
+            </Route>
           </Route>
         </Route>
-          </Route>
       </Routes>
     </BrowserRouter>
   );
